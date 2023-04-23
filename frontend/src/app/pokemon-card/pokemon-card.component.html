@@ -1,1 +1,14 @@
-<p>pokemon-card works!</p>
+<div class="card" *ngIf="pokemon">
+  <h1>{{ pokemon.name }}</h1>
+  <img [src]="pokemon.sprites.front_default" alt="Front Default">
+  <img [src]="pokemon.sprites.back_default" alt="Back Default">
+  <ul>
+    <li *ngFor="let typeSlot of pokemon.types">
+      <strong>{{ typeSlot.slot }}</strong> {{ typeSlot.type.name }}
+    </li>
+  </ul>
+</div>
+
+<div class="message" *ngIf="!pokemon">
+  <h1>Loading...</h1>
+</div>

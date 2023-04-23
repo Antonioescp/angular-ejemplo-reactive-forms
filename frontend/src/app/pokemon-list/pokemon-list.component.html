@@ -1,1 +1,12 @@
-<p>pokemon-list works!</p>
+<h1>Pokemons</h1>
+
+<a [routerLink]="['/pokemon/nuevo']">Agregar nuevo pokemon</a>
+
+<ul *ngIf="currentPage">
+  <li *ngFor="let pk of currentPage.results">
+    <a [routerLink]="['/pokemon/' + pk.name]">{{ pk.name }}</a>
+  </li>
+</ul>
+
+<button [disabled]="!currentPage?.previous" (click)="onPreviousPage()">prev</button>
+<button [disabled]="!currentPage?.next" (click)="onNextPage()">next</button>
