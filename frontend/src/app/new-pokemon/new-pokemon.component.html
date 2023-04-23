@@ -1,16 +1,53 @@
-<form>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+
   <div class="field">
     <label for="name">Nombre: </label>
-    <input type="text" name="" placeholder="" required>
+    <input type="text" name="name" placeholder="Nuevo Pokemon" required formControlName="name">
+
+    <div class="error">
+      <p
+        *ngFor="let errorMsg of getErrors(form.get('name')!, 'Nombre', { minlength: 'debe tener al menos 4 caracteres.' })">
+        {{ errorMsg }}
+      </p>
+    </div>
   </div>
 
   <div class="field">
-    <label for=""></label>
-    <input type="text" name="" placeholder="" required>
+    <label for="front-default">Sprite de frente: </label>
+    <input type="text" name="front-default" placeholder="http://www.example.com/image.png" required
+      formControlName="front_default">
+
+    <div class="error">
+      <p *ngFor="let errorMsg of getErrors(form.get('front_default')!, 'Sprite de frente')">
+        {{ errorMsg }}
+      </p>
+    </div>
   </div>
 
   <div class="field">
-    <label for=""></label>
-    <input type="text" name="" placeholder="" required>
+    <label for="back-default">Sprite de espaldas: </label>
+    <input type="text" name="back-default" placeholder="http://www.example.com/image.png" required
+      formControlName="back_default">
+
+    <div class="error">
+      <p *ngFor="let errorMsg of getErrors(form.get('back_default')!, 'Sprite de espaldas')">
+        {{ errorMsg }}
+      </p>
+    </div>
   </div>
+
+  <div class="field">
+    <label for="type">Tipo: </label>
+    <input type="text" name="type" required placeholder="fairy,dragon" formControlName="type">
+
+    <div class="error">
+      <p *ngFor="let errorMsg of getErrors(form.get('type')!, 'Tipo')">
+        {{ errorMsg }}
+      </p>
+    </div>
+  </div>
+
+  <button [disabled]="form.invalid">
+    Agregar
+  </button>
 </form>

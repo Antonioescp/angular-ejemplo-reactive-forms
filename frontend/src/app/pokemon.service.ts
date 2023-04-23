@@ -57,4 +57,9 @@ export class PokemonService {
     const url = `${environment.baseUrl+ environment.pokemonEndpoint + name}`;
     return this.http.get<Pokemon>(url);
   }
+
+  addPokemon(pokemon: Pokemon): Observable<Pokemon | null> {
+    const url =`${environment.baseUrl}${environment.pokemonEndpoint}`;
+    return this.http.post<Pokemon | null>(url, pokemon);
+  }
 }

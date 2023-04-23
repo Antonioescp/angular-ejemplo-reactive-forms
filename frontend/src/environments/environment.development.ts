@@ -1,4 +1,4 @@
 export const environment = {
-  baseUrl: 'https://pokeapi.co/api/v2/',
+  baseUrl: 'http://localhost:8000/',
   pokemonEndpoint: 'pokemon/'
 };
