@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Pokemon, PokemonService } from '../pokemon.service';
-import { FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { FormControl, FormGroup, Validators, AbstractControl, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -45,7 +45,11 @@ export class NewPokemonComponent {
       name: new FormControl('', [Validators.required, Validators.minLength(4)]),
       front_default: new FormControl('', Validators.required),
       back_default: new FormControl('', Validators.required),
-      type: new FormControl('', Validators.required)
+      types: new FormArray([
+        new FormControl('',  [
+          Validators.required
+        ])
+      ])
     });
   }
 
@@ -68,7 +72,19 @@ export class NewPokemonComponent {
       front_default: front_default.value,
       back_default: back_default.value
     };
-    newPokemon.types = [{ slot: 0, type: { name: type.value }}];
+    
+    newPokemon.types = [];
+    const types = this.form.get('types') as FormArray<FormControl<string | null>>;
+    types.controls.forEach((control, index) => {
+      if (control.value) {
+        newPokemon.types.push({
+          slot: index + 1,
+          type: {
+            name: control.value
+          }
+        });
+      }
+    });
 
     this.pokemonService.addPokemon(newPokemon).subscribe(
       res => {
@@ -76,5 +92,20 @@ export class NewPokemonComponent {
         this.router.navigate(['/']);
       }
     )
+  }
+
+  addType(): void {
+    const types = this.form.controls['types'] as FormArray;
+    types.push(new FormControl('', [
+      Validators.required
+    ]));
+  }
+
+  removeType(index: number): void {
+    this.types.removeAt(index);
+  }
+
+  public get types(): FormArray<FormControl<string | null>> {
+    return this.form.controls['types'] as FormArray;
   }
 }

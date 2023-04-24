@@ -6,7 +6,7 @@ import { NewPokemonComponent } from './new-pokemon/new-pokemon.component';
 
 const routes: Routes = [
   { path: 'pokemon/nuevo', component: NewPokemonComponent },
-  { path: 'pokemon/:name:number', component: PokemonCardComponent },
+  { path: 'pokemon/:name', component: PokemonCardComponent },
   { path: '', component: PokemonListComponent }
 ];
 

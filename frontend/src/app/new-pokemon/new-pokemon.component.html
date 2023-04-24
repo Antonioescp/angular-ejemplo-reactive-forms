@@ -36,18 +36,21 @@
     </div>
   </div>
 
-  <div class="field">
-    <label for="type">Tipo: </label>
-    <input type="text" name="type" required placeholder="fairy,dragon" formControlName="type">
+  <button type="button" (click)="addType()">+</button>
+
+  <div class="field" *ngFor="let control of types.controls; index as i">
+    <button *ngIf="types.length > 1" type="button" (click)="removeType(i)">-</button>
+    <label for="type-{{i}}">Tipo {{ i + 1 }}: </label>
+    <input type="text" name="type-{{i}}" required placeholder="fairy" [formControl]="control">
 
     <div class="error">
-      <p *ngFor="let errorMsg of getErrors(form.get('type')!, 'Tipo')">
+      <p *ngFor="let errorMsg of getErrors(types.at(i), 'Tipo ' + (i + 1))">
         {{ errorMsg }}
       </p>
     </div>
   </div>
 
-  <button [disabled]="form.invalid">
+  <button [disabled]="form.invalid" type="submit">
     Agregar
   </button>
 </form>
